@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 24" width="96" height="24" role="img" aria-label="ADM (segnaposto)">
+  <!--
+    SEGNAPOSTO — da sostituire con il logo ADM reale (stesso nome file).
+    Esiste solo per evitare un 404 su <BrandHeader />; non è il marchio.
+  -->
+  <rect x="0.5" y="0.5" width="95" height="23" rx="4" fill="none" stroke="#DFDBE3" stroke-dasharray="3 3" />
+  <text x="48" y="16" text-anchor="middle" font-family="Montserrat, system-ui, sans-serif" font-size="11" font-weight="600" letter-spacing="1.5" fill="#8F86A0">ADM</text>
+</svg>
