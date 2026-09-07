@@ -52,12 +52,12 @@ export async function sendInternalSummaryEmail(
 export async function sendClientConfirmationEmail(data: Questionario) {
   const transport = getTransport();
   const html = await render(
-    <ClientConfirmationEmail nomeCliente={data.nomeCognome} />
+    <ClientConfirmationEmail data={data} />
   );
   await transport.sendMail({
     from: `Arianna Dal Monte | ADM Design & Digital <${process.env.GMAIL_USER}>`,
     to: data.email,
-    subject: "Grazie — ho ricevuto le tue risposte",
+    subject: "Grazie — ecco la copia delle tue risposte",
     html,
   });
 }

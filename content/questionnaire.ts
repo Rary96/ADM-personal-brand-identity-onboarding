@@ -89,8 +89,14 @@ export const sections: Section[] = [
         required: false,
       },
       {
+        // Il contatto del cliente è già noto (proposta approvata, prima call
+        // di allineamento già fatta): questo campo NON serve a farsi lasciare
+        // un recapito, serve solo a recapitare la copia delle risposte. Il
+        // copy lo dice, così non sembra una richiesta di dati già dati.
         id: "email",
-        label: "Email di riferimento",
+        label: "A quale indirizzo vuoi ricevere una copia delle tue risposte?",
+        guida:
+          "Il tuo contatto ce l'ho già: serve solo per mandarti il riepilogo di quello che scrivi qui, così puoi rileggerlo con calma prima della call.",
         type: "email",
         required: true,
       },
