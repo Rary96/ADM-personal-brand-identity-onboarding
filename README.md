@@ -15,14 +15,20 @@ Progetto gemello, da cui questo eredita tutta l'architettura:
 ## A cosa serve (e a cosa no)
 
 Chi compila **è già un cliente acquisito**. Il form non serve a valutare un
-lead o a fare un preventivo: raccoglie materiale **prima della call di kickoff
-operativa**, dove le risposte vengono verificate, approfondite e usate per
+lead o a fare un preventivo: raccoglie materiale **prima del meeting di kickoff
+operativo**, dove le risposte vengono indagate, circoscritte e usate per
 decidere la direzione visiva.
 
 Per questo, rispetto al gemello, **non ci sono domande su budget, deliverable,
 decisore finale o tempistiche contrattuali**: appartengono a una fase già
 chiusa. E per questo il copy dice esplicitamente che le risposte non devono
-essere perfette — si rivedono insieme in call.
+essere perfette — si rivedono insieme al kickoff.
+
+I prossimi passi comunicati al cliente ricalcano la roadmap della proposta
+approvata: questionario preliminare → visione del materiale → meeting di
+kickoff operativo → Ricerca & Analisi → brief riassuntivo e 2 proposte di
+moodboard → 1° meeting di confronto. Se cambia la roadmap del servizio, va
+aggiornato `outroCopy` in `content/questionnaire.ts`.
 
 ## Cosa cambia rispetto al gemello aziendale
 
@@ -46,7 +52,9 @@ Altre differenze strutturali:
 - **Bottoni con stati espliciti** — nel gemello attivo e disabilitato erano lo
   stesso colore a opacità diversa, quasi indistinguibili. Qui sono due token
   (`accent.500` / `accent.200`), che risolve anche un problema di contrasto.
-- **Logo ADM in header persistente**, assente nel gemello.
+- **Logo ADM in header persistente** (versione breve/monogramma: a 24px di
+  altezza il logotipo esteso sarebbe illeggibile), favicon e logo esteso
+  nell'header delle email. Tutto assente nel gemello.
 - **Token di personalizzazione `{{nome}}`** col solo nome di battesimo, non
   `{{azienda}}` con la ragione sociale intera.
 
@@ -67,7 +75,7 @@ Altre differenze strutturali:
 
 Obbligatorie: `nomeCognome`, `email`, `professione`, `obiettivoPersonalBrand`,
 `percorso`, `valori`, `riferimentoSu`, `pubblicoTarget`, `riferimentiVisivi`.
-Tutto il resto è facoltativo — quello che manca si recupera in call.
+Tutto il resto è facoltativo — quello che manca si recupera al kickoff.
 
 ## Decisioni tecniche (ereditate dal gemello)
 
@@ -90,14 +98,15 @@ Tutto il resto è facoltativo — quello che manca si recupera in call.
 
 ```bash
 npm install
-cp .env.local.example .env.local   # e compila i 5 valori
+cp .env.local.example .env.local   # e compila i valori
 npm run dev
 ```
 
-Variabili d'ambiente richieste: `GOOGLE_SERVICE_ACCOUNT_EMAIL`,
-`GOOGLE_PRIVATE_KEY`, `GOOGLE_SHEET_ID`, `GMAIL_USER`, `GMAIL_APP_PASSWORD`.
-Quattro su cinque si copiano identiche dal progetto gemello: solo
-`GOOGLE_SHEET_ID` è nuovo.
+Variabili d'ambiente: `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_PRIVATE_KEY`,
+`GOOGLE_SHEET_ID`, `GMAIL_USER`, `GMAIL_APP_PASSWORD`, `NEXT_PUBLIC_SITE_URL`.
+Quattro si copiano identiche dal progetto gemello; `GOOGLE_SHEET_ID` è nuovo e
+`NEXT_PUBLIC_SITE_URL` serve solo al logo nell'header delle email (i client di
+posta non risolvono percorsi relativi) — ha un fallback, vedi `lib/site-url.ts`.
 
 ## Documentazione
 
