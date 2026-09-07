@@ -5,8 +5,8 @@ fluide, barra di progresso) per raccogliere il brief di un progetto di
 **personal brand identity**.
 
 **Stato**: codice completo, `npm run build` verde, **non ancora deployato**.
-Mancano il logo reale, il Google Sheet e il collegamento GitHub/Vercel — vedi
-[`doc/PROGRESS.md`](doc/PROGRESS.md).
+Repo GitHub collegato. Restano la preparazione del Google Sheet e il progetto
+Vercel — vedi [`doc/PROGRESS.md`](doc/PROGRESS.md).
 
 Progetto gemello, da cui questo eredita tutta l'architettura:
 `../onboarding-brand-identity` (brand identity **aziendale**), in produzione su

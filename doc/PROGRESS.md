@@ -97,21 +97,92 @@ due email.
 
 ---
 
+## 2026-09-07 (secondo blocco) — Logo, roadmap, repo
+
+### Repo e Sheet
+
+Repo `Rary96/ADM-personal-brand-identity-onboarding` (pubblico, come il
+gemello) collegato e pushato. `.env.local` compilato: 4 valori copiati dal
+gemello + il `GOOGLE_SHEET_ID` del foglio nuovo.
+
+Aggiunto `doc/sheet-headers.tsv` con le 51 intestazioni tab-separate, pronte
+da incollare in A1 del tab `Risposte`: `appendSubmissionRow` fa un append
+cieco e non le scrive da sé. Verificato che le 51 intestazioni corrispondono
+esattamente ai 51 valori prodotti da `buildRow`.
+
+### Lacuna trovata: l'email al cliente non conteneva le risposte
+
+Segnalato dall'utente che il campo `email` del form serve a mandare al cliente
+**la copia delle sue risposte** — il contatto è già noto, non è una richiesta
+di recapito. Ma `ClientConfirmationEmail` mandava solo ringraziamento e
+prossimi passi.
+
+Corretto: il template riceve ora l'intero `data` e rende il riepilogo con lo
+stesso `buildEmailSections()` dell'email interna, così le due non possono
+divergere quando cambia una domanda. Anche la label della domanda ora dice a
+cosa serve l'indirizzo, per non sembrare una richiesta di dati già forniti.
+
+### Logo
+
+Trovati gli asset reali in `ADM/Peronal Brand identity/Responsiveness`, che è
+un vero sistema di responsiveness del marchio (versione estesa con cerchio,
+versione breve/monogramma, icona quadrata). Scelte:
+
+- **Header persistente: versione BREVE (monogramma).** A 24px di altezza il
+  logotipo esteso sarebbe largo ~43px e del tutto illeggibile. È esattamente
+  il caso d'uso per cui la versione corta esiste.
+- **Email: versione ESTESA**, dove c'è spazio in larghezza (140px).
+- **Favicon**: monogramma quadrato ritagliato dall'icona ad alta risoluzione
+  (8266px) invece che upscalato dal `ADM_Logo favicon.png` a 134px.
+
+Il logo nelle email ha richiesto `lib/site-url.ts` e la env var
+`NEXT_PUBLIC_SITE_URL`: i client di posta non risolvono percorsi relativi,
+serve un URL assoluto pubblico. Con fallback sul dominio di produzione, così
+un'email non si rompe se la variabile non è impostata.
+
+### Deviazione: `app/icon.png` rompe il build
+
+Primo tentativo con la convenzione Next `app/icon.png`. `next build` fallisce
+con `Cannot find module for page: /icon.png` e, a cache pulita, con un ENOENT
+su `pages-manifest.json`. Il build passa appena si rimuove il file, quindi la
+causa è quella route di metadata — molto probabilmente il percorso assoluto
+della cartella, che contiene una pipe e delle & ("ADM | Design & Digital").
+
+Risolto servendo le icone da `public/` e dichiarandole in `metadata.icons`,
+senza passare dal codegen delle metadata route. Verificato su build di
+produzione: `<link rel="icon">` presente nel markup, i quattro asset
+rispondono 200 `image/png`, il logo dell'header viene preloadato.
+
+Nota: il commit `17e7720` è stato pushato con il build rotto (una catena `&&`
+con un `grep` che ha comunque avuto successo ha nascosto il fallimento).
+Riparato subito dopo in `3314435`.
+
+### Copy allineato alla roadmap del servizio
+
+Ricevuta la roadmap della proposta approvata
+(`PersonalBrandIdentity_proposal`). La sequenza reale è: raccolta materiale +
+**questionario preliminare** (questo form) → visione del materiale → **meeting
+di kickoff operativo** → **Ricerca & Analisi** → output brief riassuntivo + 2
+proposte di moodboard → 1° meeting di confronto.
+
+Prima l'outro prometteva *"ti scrivo entro 1-2 giorni lavorativi per fissare
+la call di kickoff"*, che non corrispondeva. Riscritti `outroCopy` e i punti
+dell'intro sui passaggi reali, e uniformata la terminologia da "call" a
+"meeting di kickoff operativo".
+
+---
+
 ## Cosa resta da fare
 
 Tutto in mano all'utente, il codice non è bloccato da nulla di tecnico.
 
-1. **Google Sheet** — creare un foglio nuovo, condividerlo *in modifica* con la
-   Service Account già in uso sul gemello, creare un tab chiamato `Risposte` e
-   incollare `SHEET_HEADERS` (`lib/google-sheets.ts`) nella prima riga. Poi
-   passare il `GOOGLE_SHEET_ID`. Le altre 4 env var si copiano identiche.
-2. **Logo ADM** — `public/logo-adm.svg` è un **segnaposto generato** per non
-   lasciare un 404 su `<BrandHeader />`. Servono: l'SVG reale (stesso nome
-   file), un PNG per l'header delle due email (i client email non renderizzano
-   SVG in modo affidabile), e un'icona quadrata per la favicon (`app/icon.png`).
-3. **Repo GitHub** — da creare e collegare (`gh` è già autenticato come
-   `Rary96`). Nome proposto: `ADM-personal-brand-onboarding`.
-4. **Progetto Vercel** — importare il repo dalla dashboard (team ADM Design,
-   piano Hobby) e impostare le 5 env var su Production e Preview.
-5. **Test end-to-end in produzione** — una submission reale con allegato, come
-   fatto sul gemello: verificare riga su Sheets e ricezione di entrambe le email.
+1. **Preparare il Google Sheet** — condividerlo *in modifica* con
+   `onboarding-form@onboarding-brand-identity.iam.gserviceaccount.com`,
+   rinominare il tab in `Risposte`, incollare `doc/sheet-headers.tsv` in A1.
+2. **Progetto Vercel** — importare il repo dalla dashboard (team ADM Design,
+   piano Hobby) e impostare le 6 env var su Production e Preview.
+3. **Test end-to-end in produzione** — una submission reale con allegato, come
+   fatto sul gemello: verificare la riga su Sheets, la ricezione di entrambe le
+   email e che il logo nell'header delle email si veda davvero (è il punto più
+   fragile: dipende da `NEXT_PUBLIC_SITE_URL` e dal fatto che l'immagine sia
+   pubblicamente raggiungibile).

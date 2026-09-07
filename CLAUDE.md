@@ -173,27 +173,45 @@ onboarding-personal-brand-identity/
 ## Stato
 
 **Codice completo e buildabile.** Tutte le 35 domande, schema, validazione,
-API, email e Sheets sono implementati e `npm run build` passa.
+API, email, Sheets, logo e favicon sono implementati e `npm run build` passa.
+Repo GitHub collegato: `Rary96/ADM-personal-brand-identity-onboarding`
+(branch `main`), `.env.local` locale compilato.
 
-**Non ancora deployato.** Mancano tre cose, tutte in mano all'utente — vedi
-`doc/PROGRESS.md` per il dettaglio:
+**Non ancora deployato.** Restano da fare, in mano all'utente:
 
-1. `GOOGLE_SHEET_ID` di un foglio nuovo, condiviso con la Service Account già
-   in uso sul gemello (le altre 4 env var si copiano identiche).
-2. Il **logo ADM reale** — `public/logo-adm.svg` è un segnaposto generato per
-   non lasciare un 404. Serve anche una versione PNG per le email e
-   un'icona per la favicon (`app/icon.png`).
-3. Repo GitHub e progetto Vercel da creare e collegare.
+1. Preparare il Google Sheet: condividerlo con la Service Account, creare il
+   tab `Risposte` e incollarci `doc/sheet-headers.tsv` nella prima riga.
+2. Creare il progetto Vercel, collegarlo al repo e impostare le env var.
+3. Test end-to-end in produzione con una submission reale.
+
+Vedi `doc/PROGRESS.md` per il dettaglio.
 
 ## Variabili d'ambiente
 
 ```
 GOOGLE_SERVICE_ACCOUNT_EMAIL=      # identica al progetto gemello
 GOOGLE_PRIVATE_KEY=                # identica al progetto gemello
-GOOGLE_SHEET_ID=                   # ⚠️ NUOVA — foglio dedicato a questo form
+GOOGLE_SHEET_ID=                   # NUOVA — foglio dedicato a questo form
 GMAIL_USER=                        # identica al progetto gemello
 GMAIL_APP_PASSWORD=                # identica al progetto gemello
+NEXT_PUBLIC_SITE_URL=              # dominio di produzione, solo per il logo nelle email
 ```
+
+`NEXT_PUBLIC_SITE_URL` esiste perché i client di posta non risolvono i
+percorsi relativi: il logo nell'header delle email dev'essere un URL assoluto
+pubblico. Ha un fallback sul dominio di produzione in `lib/site-url.ts`, così
+un'email non si rompe se la variabile non è impostata.
+
+## Trappola nota: niente `app/icon.png`
+
+Le icone (favicon, apple-icon) sono servite da `public/` e dichiarate a mano
+in `metadata.icons` (`app/layout.tsx`), **non** con la convenzione
+`app/icon.png`. Quella genera una route di metadata su cui Next 14.2.35
+inciampa in questo progetto — `next build` fallisce con
+`Cannot find module for page: /icon.png` e, a cache pulita, con un ENOENT su
+`pages-manifest.json`. La causa più probabile è il percorso assoluto della
+cartella, che contiene una pipe e delle & ("ADM | Design & Digital").
+Non "semplificare" reintroducendo `app/icon.png`.
 
 Questi valori li genera/recupera l'utente — non vanno inventati né richiesti
 come input di codice. Vivono solo in `.env.local` (gitignored) in locale e
