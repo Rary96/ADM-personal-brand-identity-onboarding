@@ -15,7 +15,7 @@ interface ClientConfirmationEmailProps {
  * Email di conferma al cliente. Include il **riepilogo completo delle
  * risposte**, non solo il ringraziamento: il campo `email` del form esiste
  * proprio per recapitare questa copia (il contatto del cliente è già noto),
- * e riceverla permette di rileggere le proprie risposte prima della call.
+ * e riceverla permette di rileggere le proprie risposte prima del kickoff.
  *
  * Usa lo stesso `buildEmailSections()` del riepilogo interno, quindi le due
  * email non possono divergere quando cambia una domanda.
@@ -84,7 +84,7 @@ export function ClientConfirmationEmail({ data }: ClientConfirmationEmailProps) 
         La copia delle tue risposte
       </Heading>
       <Text style={{ fontSize: 13, lineHeight: 1.6, color: colors.neutral[500], margin: "0 0 8px" }}>
-        Rileggile con calma prima della call: se ti viene in mente qualcosa da
+        Rileggile con calma prima del kickoff: se ti viene in mente qualcosa da
         aggiungere o correggere, segnatelo e ne parliamo lì.
       </Text>
       {emailSections.map((section) => (

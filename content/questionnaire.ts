@@ -6,14 +6,14 @@
  * (sottotesto/placeholder) e obbligatorietà "di contenuto" (badge in UI).
  *
  * CONTESTO — questo form non è un modulo di preventivo: chi lo compila è un
- * cliente GIÀ acquisito, e il form serve a raccogliere materiale PRIMA della
- * call di kickoff operativa (dove le risposte vengono verificate e
+ * cliente GIÀ acquisito, e il form serve a raccogliere materiale PRIMA del
+ * meeting di kickoff operativo (dove le risposte vengono indagate e
  * approfondite insieme). Da qui due conseguenze sul copy, da non perdere in
  * eventuali revisioni:
  *   1. Niente domande su budget, deliverable o decisore finale — appartengono
  *      alla fase commerciale, già chiusa.
  *   2. Il tono dice esplicitamente che le risposte non devono essere perfette,
- *      perché si rivedono in call. Abbassare la pressione alza la sincerità
+ *      perché si rivedono nel kickoff. Abbassare la pressione alza la sincerità
  *      delle risposte, che è esattamente ciò che serve per orientare lo stile.
  *
  * Tono di voce: la persona che compila resta sempre al centro. I testi di
@@ -56,7 +56,7 @@ export const introCopy = {
     "Le basi per costruire un'identità che ti somigli davvero — non un personaggio.",
   tempoStimato: "15-20 minuti",
   punti: [
-    "Non deve essere perfetto: quello che scrivi qui lo verifichiamo e approfondiamo insieme nella call di kickoff.",
+    "Non deve essere perfetto: quello che scrivi qui lo indaghiamo e circoscriviamo insieme nel meeting di kickoff operativo.",
     "Le domande facoltative puoi saltarle. Meglio una risposta sincera in tre righe che una costruita in venti.",
     "Più sei specifico, più la direzione visiva che ti proporrò sarà tua e non di chiunque altro.",
   ],
@@ -96,7 +96,7 @@ export const sections: Section[] = [
         id: "email",
         label: "A quale indirizzo vuoi ricevere una copia delle tue risposte?",
         guida:
-          "Il tuo contatto ce l'ho già: serve solo per mandarti il riepilogo di quello che scrivi qui, così puoi rileggerlo con calma prima della call.",
+          "Il tuo contatto ce l'ho già: serve solo per mandarti il riepilogo di quello che scrivi qui, così puoi rileggerlo con calma prima del kickoff.",
         type: "email",
         required: true,
       },
@@ -447,7 +447,7 @@ export const sections: Section[] = [
       },
       {
         id: "aspettativeCall",
-        label: "C'è qualcosa che vuoi assolutamente affrontare nella call di kickoff?",
+        label: "C'è qualcosa che vuoi assolutamente affrontare nel meeting di kickoff?",
         guida:
           "Un dubbio che ti porti dietro, una decisione su cui sei bloccato, una domanda che non sapevi dove mettere.",
         type: "text-long",
@@ -466,12 +466,18 @@ export const sections: Section[] = [
 export const outroCopy = {
   titolo: "Fatto, grazie {{nome}}!",
   corpo:
-    "Ho ricevuto le tue risposte. Da qui parte il lavoro vero: le leggo con calma e arrivo alla call con le idee già in ordine.",
+    "Ho ricevuto le tue risposte. Da qui parte il lavoro vero: le visiono con calma e arrivo al kickoff con le idee già in ordine.",
   // Usato solo nell'email di conferma cliente (ClientConfirmationEmail),
   // non nella OutroScreen a video — dettaglio dei prossimi passi dopo l'invio.
+  //
+  // I passi ricalcano la roadmap della proposta di servizio approvata
+  // (PersonalBrandIdentity_proposal), fase "Ricerca & Analisi": questionario
+  // preliminare → visione del materiale → meeting di kickoff operativo →
+  // Ricerca & Analisi → brief riassuntivo + 2 moodboard → 1° meeting di
+  // confronto. Se cambia la roadmap del servizio, aggiorna anche questi.
   prossimiPassi: [
-    "Leggo tutto con calma e preparo i punti da approfondire.",
-    "Ti scrivo entro 1-2 giorni lavorativi per fissare la call di kickoff.",
-    "Nella call verifichiamo insieme quello che hai scritto e definiamo la direzione visiva.",
+    "Visiono con calma le tue risposte e il materiale che hai allegato.",
+    "Ci vediamo per il meeting di kickoff operativo: lì indaghiamo e circoscriviamo insieme le caratteristiche del tuo brand e l'indirizzo visivo che vuoi comunicare.",
+    "Parte poi la fase di Ricerca & Analisi, che si chiude con un brief riassuntivo e due proposte di moodboard su cui confrontarci.",
   ],
 };

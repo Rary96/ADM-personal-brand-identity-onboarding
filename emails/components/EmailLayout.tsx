@@ -1,6 +1,16 @@
-import { Html, Head, Body, Container, Preview, Section, Text } from "@react-email/components";
+import {
+  Html,
+  Head,
+  Body,
+  Container,
+  Img,
+  Preview,
+  Section,
+  Text,
+} from "@react-email/components";
 import type { ReactNode } from "react";
 import { colors } from "@/lib/design-tokens";
+import { siteUrl } from "@/lib/site-url";
 
 interface EmailLayoutProps {
   preview: string;
@@ -35,6 +45,15 @@ export function EmailLayout({ preview, children }: EmailLayoutProps) {
               marginBottom: 24,
             }}
           >
+            {/* URL assoluto obbligatorio: i client email non risolvono i
+                percorsi relativi. Vedi lib/site-url.ts. */}
+            <Img
+              src={`${siteUrl}/logo-adm-esteso.png`}
+              alt="ADM — Arianna Dal Monte, Design &amp; Digital"
+              width={140}
+              height={77}
+              style={{ display: "block", border: 0, marginBottom: 12 }}
+            />
             <Text
               style={{
                 fontSize: 13,
@@ -45,7 +64,7 @@ export function EmailLayout({ preview, children }: EmailLayoutProps) {
                 margin: 0,
               }}
             >
-              Onboarding Brand Identity
+              Onboarding Personal Brand
             </Text>
           </Section>
 
